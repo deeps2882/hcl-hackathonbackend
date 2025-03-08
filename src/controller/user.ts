@@ -39,6 +39,14 @@ export const userController = {
       res.status(500).json({ message: "Internal server error" });
     }
   },
+  updateUserDetail: async (req: Request, res: Response) => {
+    try {
+      const users = await UserService.updateUserDetail(req.body);
+      res.status(200).json(users);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  },
   doctorMap: async (req: Request, res: Response) => {
     try {
       const users = await UserService.doctorMap(req.body);

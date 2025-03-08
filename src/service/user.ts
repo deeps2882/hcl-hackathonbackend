@@ -96,11 +96,30 @@ export const UserService = {
       if (!users) {
         throw new Error("not data found");
       }
-      console.log("users", users);
       return users;
     } catch (error) {
       console.error("Error fetching users:", error);
       throw new Error("Failed to fetch users");
+    }
+  },
+
+  updateUserDetail: async (updatedData: any) => {
+    try {
+      const userRepository = AppDataSource.getRepository(User);
+      let id = updatedData.id;
+      const user = await userRepository.findOneBy({ id });
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      Object.assign(user, updatedData);
+
+      await userRepository.save(user);
+
+      return user;
+    } catch (error) {
+      console.error("Error updating user:", error);
+      throw new Error("Failed to update user");
     }
   },
 
