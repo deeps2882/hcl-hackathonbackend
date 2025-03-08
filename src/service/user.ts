@@ -8,15 +8,16 @@ import jwt from "jsonwebtoken";
 export const UserService = {
   signup: async (userData: any) => {
     try {
+      console.log(userData);
       const userRepository = AppDataSource.getRepository(User);
 
       // Check if the email already exists
-      const existingUser = await userRepository.findOne({
-        where: { email: userData.email },
-      });
-      if (existingUser) {
-        throw new Error("Email already in use");
-      }
+      // const existingUser = await userRepository.findOne({
+      //   where: { email: userData.email },
+      // });
+      // if (existingUser) {
+      //   throw new Error("Email already in use");
+      // }
 
       // Hash the password before saving
       //   const saltRounds = 10;
@@ -61,7 +62,7 @@ export const UserService = {
 
       // Generate JWT token
       const token = jwt.sign(
-        { userId: user.id, email: user.email },
+        { userId: user.id, email: user.email, role: user.role },
         JWT_SECRET,
         { expiresIn: "1h" }
       );

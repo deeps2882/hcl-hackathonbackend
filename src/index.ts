@@ -10,6 +10,8 @@ import dotenv from "dotenv";
 
 dotenv.config(); // Load environment variables
 
+app.use(express.json());
+
 AppDataSource.initialize()
   .then(() => {
     console.log("📌 Database connected successfully");
