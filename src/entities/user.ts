@@ -37,4 +37,7 @@ export class User {
 
   @Column({ type: "text", nullable: true })
   health_status?: string;
+
+  @Column({ type: "text", nullable: true })
+  temperature?: string;
 }
