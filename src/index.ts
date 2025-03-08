@@ -3,6 +3,8 @@
 import express from "express";
 import router from "./router/index";
 import { AppDataSource } from "./database/db";
+import cors from "cors";
+
 const app = express();
 const port = 3000;
 
@@ -11,6 +13,7 @@ import dotenv from "dotenv";
 dotenv.config(); // Load environment variables
 
 app.use(express.json());
+app.use(cors());
 
 AppDataSource.initialize()
   .then(() => {
