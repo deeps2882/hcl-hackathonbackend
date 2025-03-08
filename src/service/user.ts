@@ -1,5 +1,6 @@
 /** @format */
 
+import { PatientDoctorMaster } from "../entities/patientDoctorMaster";
 import { AppDataSource } from "../database/db";
 import { User } from "../entities/user";
 import jwt from "jsonwebtoken";
@@ -82,6 +83,22 @@ export const UserService = {
       const users = await userRepository.find();
       console.log(users);
       return users;
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      throw new Error("Failed to fetch users");
+    }
+  },
+
+  doctorMap: async (data: any) => {
+    try {
+      const mapDoctorRepository =
+        AppDataSource.getRepository(PatientDoctorMaster);
+      let actualData = {
+        doctorId: data.doctorId,
+        patientId: data.patientId,
+      };
+      const mapDoctor = mapDoctorRepository.create(actualData);
+      return mapDoctor;
     } catch (error) {
       console.error("Error fetching users:", error);
       throw new Error("Failed to fetch users");
