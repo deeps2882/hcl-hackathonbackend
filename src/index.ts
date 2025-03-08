@@ -6,6 +6,10 @@ import { AppDataSource } from "./database/db";
 const app = express();
 const port = 3000;
 
+import dotenv from "dotenv";
+
+dotenv.config(); // Load environment variables
+
 AppDataSource.initialize()
   .then(() => {
     console.log("📌 Database connected successfully");

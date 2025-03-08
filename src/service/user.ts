@@ -2,6 +2,7 @@
 
 import { AppDataSource } from "../database/db";
 import { User } from "../entities/user";
+import jwt from "jsonwebtoken";
 
 export const UserService = {
   signup: async (userData: any) => {
@@ -33,6 +34,48 @@ export const UserService = {
       throw new Error("Failed to register user");
     }
   },
+  login: async (userData: any, res: any) => {
+    try {
+      const { email, password } = userData;
+
+      if (!email || !password) {
+        return res
+          .status(400)
+          .json({ message: "Email and password are required" });
+      }
+
+      const userRepository = AppDataSource.getRepository(User);
+      const user = await userRepository.findOne({ where: { email } });
+
+      if (!user) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+
+      // Compare passwords
+      // const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (user.password != password) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+      const JWT_SECRET = process.env.JWT_SECRET as string;
+
+      // Generate JWT token
+      const token = jwt.sign(
+        { userId: user.id, email: user.email },
+        JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      res.status(200).json({
+        message: "Login successful",
+        token,
+        user: { id: user.id, name: user.name, email: user.email },
+      });
+    } catch (error) {
+      console.error("Login error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  },
+
   getAllUser: async () => {
     try {
       const userRepository = AppDataSource.getRepository(User);

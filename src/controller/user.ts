@@ -13,7 +13,14 @@ export const userController = {
       res.status(500).json({ message: "Internal server error" });
     }
   },
-  login: async (req: Request, res: Response) => {},
+  login: async (req: Request, res: Response) => {
+    try {
+      const users = await UserService.login(req.body, res);
+      res.status(200).json(users);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  },
   getAllUser: async (req: Request, res: Response) => {
     try {
       const users = await UserService.getAllUser();

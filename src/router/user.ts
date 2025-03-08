@@ -3,9 +3,11 @@
 
 import { Router } from "express";
 import { userController } from "../controller/user";
+import { authenticateJWT } from "../utility/helper";
 const userRouter = Router();
 
-userRouter.get("/", userController.getAllUser);
+userRouter.get("/", authenticateJWT, userController.getAllUser);
 userRouter.post("/signup", userController.signup);
+userRouter.post("/login", userController.login);
 
 export default userRouter;

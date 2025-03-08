@@ -3,13 +3,15 @@
 import { DataSource } from "typeorm";
 import { entities } from "../entities";
 
+//postgres:[YOUR-PASSWORD]@db.pomgepcfwyshtuexiebz.supabase.co:5432/postgres
+
 export const AppDataSource = new DataSource({
   type: "postgres",
-  host: "localhost",
+  host: "db.pomgepcfwyshtuexiebz.supabase.co",
   port: 5432,
   username: "postgres",
   password: "postgres",
-  database: "healthcare",
+  database: "postgres",
   synchronize: true,
   logging: true,
   entities: entities,
