@@ -5,11 +5,13 @@ import { entities } from "../entities";
 
 //postgres:[YOUR-PASSWORD]@db.pomgepcfwyshtuexiebz.supabase.co:5432/postgres
 
+//  postgresql://postgres.pomgepcfwyshtuexiebz:[YOUR-PASSWORD]@aws-0-ap-south-1.pooler.supabase.com:6543/postgres
+
 export const AppDataSource = new DataSource({
   type: "postgres",
-  host: "db.pomgepcfwyshtuexiebz.supabase.co",
-  port: 5432,
-  username: "postgres",
+  host: "aws-0-ap-south-1.pooler.supabase.com",
+  port: 6543,
+  username: "postgres.pomgepcfwyshtuexiebz",
   password: "postgres",
   database: "postgres",
   synchronize: true,
