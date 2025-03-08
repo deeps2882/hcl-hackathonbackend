@@ -82,7 +82,21 @@ export const UserService = {
     try {
       const userRepository = AppDataSource.getRepository(User);
       const users = await userRepository.find();
-      console.log(users);
+      return users;
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      throw new Error("Failed to fetch users");
+    }
+  },
+
+  getUserDetail: async (id: number) => {
+    try {
+      const userRepository = AppDataSource.getRepository(User);
+      const users = await userRepository.findOneBy({ id });
+      if (!users) {
+        throw new Error("not data found");
+      }
+      console.log("users", users);
       return users;
     } catch (error) {
       console.error("Error fetching users:", error);
