@@ -8,7 +8,6 @@ import jwt from "jsonwebtoken";
 export const UserService = {
   signup: async (userData: any) => {
     try {
-      console.log(userData);
       const userRepository = AppDataSource.getRepository(User);
 
       // Check if the email already exists
@@ -137,6 +136,7 @@ export const UserService = {
         patientId: data.patientId,
       };
       const mapDoctor = mapDoctorRepository.create(actualData);
+      await mapDoctorRepository.save(mapDoctor);
       return mapDoctor;
     } catch (error) {
       console.error("Error fetching users:", error);
